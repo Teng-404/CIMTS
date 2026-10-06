@@ -72,11 +72,14 @@ INSTALLED_APPS = [
 ]
 
 if USE_CLOUDINARY:
-    # ต้องอยู่ก่อน staticfiles ตามคำแนะนำของ django-cloudinary-storage
-    INSTALLED_APPS.insert(
-        INSTALLED_APPS.index("django.contrib.staticfiles"),
-        "cloudinary_storage",
-    )
+    # ใส่เฉพาะ "cloudinary" เท่านั้น
+    #
+    # ไม่ใส่ "cloudinary_storage" ใน INSTALLED_APPS โดยตั้งใจ เพราะแอปนั้น
+    # เขียนทับคำสั่ง collectstatic ของ Django แล้วไปอ่าน settings.STATICFILES_STORAGE
+    # ซึ่ง Django 5.1 ลบทิ้งไปแล้ว ทำให้ build ล้มเหลวด้วย AttributeError
+    #
+    # เราใช้แค่คลาส MediaCloudinaryStorage (อ้างถึงใน STORAGES ด้านล่าง)
+    # ซึ่งทำงานได้โดยไม่ต้องลงทะเบียนแอป
     INSTALLED_APPS.append("cloudinary")
 
 MIDDLEWARE = [
