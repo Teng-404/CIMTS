@@ -8,6 +8,9 @@ databases:
     databaseName: cimts
     user: cimts
     plan: free          # ⚠️ ฐานข้อมูลฟรีหมดอายุ 30 วันนับจากวันสร้าง
+    region: singapore   # ⚠️ ต้องตรงกับ region ของเว็บเซอร์วิสด้านล่าง
+                        # ถ้าคนละภูมิภาค ชื่อโฮสต์ภายในจะแปลงเป็น IP ไม่ได้
+                        # และ migrate จะล้มด้วย "Name or service not known"
 
 services:
   - type: web
