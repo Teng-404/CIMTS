@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>แดชบอร์ดผู้ดูแล | CampusCare Incident Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="app">
+    <!-- เมนูซ้ายและแถบบน: สร้างโดย mountShell() ใน shared.js -->
+    <aside class="sidebar" id="sidebar" aria-label="เมนูหลัก"></aside>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+
+      <main class="content">
+        <section class="page-head">
+          <div>
+            <h1 id="greeting"></h1>
+            <p class="muted" id="today"></p>
+          </div>
+          <button type="button" class="btn btn-primary btn-lg" data-action="new">
+            <svg class="icon"><use href="#i-plus"/></svg>รับแจ้งเหตุใหม่
+          </button>
+        </section>
+
+        <!-- แบนเนอร์เหตุฉุกเฉินที่ยังไม่มอบหมาย (JS เติมข้อมูล) -->
+        <section class="emergency" id="emergency" aria-live="polite" hidden></section>
+
+        <!-- การ์ดสรุปสถานะ: กดเพื่อกรองตาราง -->
+        <section class="stats" id="stats" aria-label="สรุปสถานะเหตุ"></section>
+
+        <div class="grid-main">
+          <section class="card" aria-labelledby="incidentsTitle">
+            <div class="card-head">
+              <h2 class="card-title" id="incidentsTitle">รายการแจ้งเหตุล่าสุด</h2>
+              <div class="card-head-tools">
+                <span class="muted small" id="incidentsMeta"></span>
+                <a class="link-arrow" id="viewAllLink" href="incidents.html">ดูทั้งหมด<svg class="icon icon--xs"><use href="#i-arrow-right"/></svg></a>
+              </div>
+            </div>
+            <div class="tabs" id="tabs" role="group" aria-label="กรองตามสถานะ"></div>
+            <div class="table-wrap">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">เลขที่</th>
+                    <th scope="col">รายการ</th>
+                    <th scope="col">ระดับ</th>
+                    <th scope="col">สถานะ</th>
+                    <th scope="col">ผู้รับผิดชอบ</th>
+                  </tr>
+                </thead>
+                <tbody id="incidentsBody"></tbody>
+              </table>
+            </div>
+            <div class="card-foot" id="pager"></div>
+          </section>
+
+          <section class="card" id="actionsCard" aria-labelledby="actionsTitle">
+            <div class="card-head">
+              <h2 class="card-title" id="actionsTitle">ต้องดำเนินการ</h2>
+              <span class="chip" id="actionsCount"></span>
+            </div>
+            <div id="actionsBody"></div>
+          </section>
+        </div>
+
+        <div class="grid-bottom">
+          <section class="card" aria-labelledby="workloadTitle">
+            <div class="card-head">
+              <h2 class="card-title" id="workloadTitle">ภาระงานเจ้าหน้าที่</h2>
+              <span class="muted small" id="workloadMeta"></span>
+            </div>
+            <div id="workloadBody"></div>
+          </section>
+
+          <section class="card card--fill" aria-labelledby="trendTitle">
+            <div class="card-head">
+              <h2 class="card-title" id="trendTitle">แนวโน้มการแจ้งเหตุ</h2>
+              <span class="muted small">7 วันล่าสุด</span>
+            </div>
+            <div class="chart" id="trendBody"></div>
+          </section>
+
+          <section class="card" aria-labelledby="categoryTitle">
+            <div class="card-head">
+              <h2 class="card-title" id="categoryTitle">สัดส่วนตามประเภทเหตุ</h2>
+              <span class="muted small">ทั้งหมดในระบบ</span>
+            </div>
+            <div class="chart" id="categoryBody"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+  <!-- หน้าต่างป๊อปอัป (shared.js เติมเนื้อหาเมื่อเปิด) -->
+  <dialog id="assignDialog" aria-labelledby="assignTitle"></dialog>
+  <dialog id="detailDialog" class="sheet" aria-labelledby="detailTitle"></dialog>
+  <dialog id="newDialog" aria-labelledby="newTitle"></dialog>
+  <dialog id="confirmDialog" class="dialog-sm" aria-labelledby="confirmTitle"></dialog>
+
+  <script src="shared.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

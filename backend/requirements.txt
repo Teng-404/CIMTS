@@ -1,0 +1,18 @@
+Django>=5.2,<6.0
+djangorestframework==3.18.1
+django-cors-headers==4.9.0
+django-filter==26.1
+pillow==12.1.1
+python-dotenv==1.2.2
+
+# PostgreSQL driver
+psycopg2-binary==2.9.13
+
+# Cloudinary image storage
+cloudinary==1.46.2
+django-cloudinary-storage==0.3.0
+
+# Production server and static file serving
+gunicorn==23.0.0
+whitenoise==6.8.2
+dj-database-url==2.3.0

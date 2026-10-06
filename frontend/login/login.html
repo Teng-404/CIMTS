@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>เข้าสู่ระบบ | CampusCare Incident Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+  <main class="login">
+    <!-- ฝั่งซ้าย: แบรนด์ (พื้นกรมท่าเหมือนแถบเมนูใน Dashboard) -->
+    <aside class="brand-panel">
+      <div class="brand">
+        <img class="brand-logo" src="logo.png" width="1000" height="252" alt="CampusCare Incident Center">
+      </div>
+
+      <div class="brand-body">
+        <p class="brand-headline">ศูนย์กลางรับแจ้งและติดตามเหตุภายในมหาวิทยาลัย</p>
+        <ul class="features">
+          <li>
+            <span class="feature-icon feature-icon--blue"><svg class="icon"><use href="#i-clipboard"/></svg></span>
+            <div>
+              <strong>รับแจ้งและมอบหมายงานได้ทันที</strong>
+              <span>ติดตามสถานะเหตุทุกรายการในที่เดียว</span>
+            </div>
+          </li>
+          <li>
+            <span class="feature-icon feature-icon--red"><svg class="icon"><use href="#i-bell"/></svg></span>
+            <div>
+              <strong>แจ้งเตือนงานเกิน SLA</strong>
+              <span>ไม่พลาดทุกเหตุเร่งด่วนและเหตุฉุกเฉิน</span>
+            </div>
+          </li>
+          <li>
+            <span class="feature-icon feature-icon--green"><svg class="icon"><use href="#i-check"/></svg></span>
+            <div>
+              <strong>สรุปรายงานและสถิติ</strong>
+              <span>ดูภาระงานเจ้าหน้าที่และผลการดำเนินการ</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ฝั่งขวา: ฟอร์มเข้าสู่ระบบ -->
+    <section class="form-panel">
+      <div class="form-card" id="formCard">
+        <h1>เข้าสู่ระบบ</h1>
+        <p class="subtitle">สำหรับเจ้าหน้าที่และผู้ประสานงาน</p>
+
+        <div id="banner" class="banner" role="alert" hidden>
+          <svg class="icon" id="bannerIcon"><use href="#i-alert"/></svg>
+          <span id="bannerText"></span>
+        </div>
+
+        <form id="loginForm" novalidate>
+          <div class="field">
+            <label for="username">ชื่อผู้ใช้ หรือ อีเมล</label>
+            <div class="input-wrap input-wrap--icon">
+              <svg class="icon input-icon" aria-hidden="true"><use href="#i-user"/></svg>
+              <input id="username" name="username" type="text" autocomplete="username"
+                     placeholder="เช่น somchai@campus.ac.th" aria-describedby="usernameError">
+            </div>
+            <p class="field-error" id="usernameError" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="password">รหัสผ่าน</label>
+            <div class="input-wrap input-wrap--icon input-wrap--toggle">
+              <svg class="icon input-icon" aria-hidden="true"><use href="#i-lock"/></svg>
+              <input id="password" name="password" type="password" autocomplete="current-password"
+                     placeholder="กรอกรหัสผ่านของคุณ" aria-describedby="passwordError">
+              <button type="button" class="toggle-password" data-toggle-password="password"
+                      aria-label="แสดงรหัสผ่าน" aria-pressed="false">
+                <svg class="icon"><use href="#i-eye"/></svg>
+              </button>
+            </div>
+            <p class="field-error" id="passwordError" hidden></p>
+          </div>
+
+          <div class="form-row">
+            <label class="checkbox">
+              <input type="checkbox" id="remember" name="remember">
+              <span>จดจำชื่อผู้ใช้</span>
+            </label>
+            <a href="forgot-password.html" class="link">ลืมรหัสผ่าน?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="submitBtn">
+            <span class="btn-label">เข้าสู่ระบบ</span>
+          </button>
+        </form>
+
+        <p class="help">ยังไม่มีบัญชี? <a href="register.html" class="link">สมัครสมาชิก</a></p>
+      </div>
+
+      <p class="legal">© <span id="year"></span> CampusCare Incident Center</p>
+    </section>
+  </main>
+
+  <script src="auth-common.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>

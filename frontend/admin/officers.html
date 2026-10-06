@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>จัดการเจ้าหน้าที่ | CampusCare Incident Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="app">
+    <!-- เมนูซ้ายและแถบบน: สร้างโดย mountShell() ใน shared.js -->
+    <aside class="sidebar" id="sidebar" aria-label="เมนูหลัก"></aside>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+
+      <main class="content">
+        <section class="page-head page-head--list">
+          <div>
+            <p class="eyebrow">Staff Management</p>
+            <h1>จัดการเจ้าหน้าที่</h1>
+            <p class="muted">ภาพรวมกำลังคน ภาระงาน และตารางเข้าเวรของทีมช่าง</p>
+          </div>
+        </section>
+
+        <!-- การ์ดสรุป: กดเพื่อกรองตาราง -->
+        <section class="stats" id="staffStats" aria-label="สรุปสถานะเจ้าหน้าที่"></section>
+
+        <section class="card" aria-label="รายชื่อเจ้าหน้าที่">
+          <div class="card-head">
+            <h2 class="card-title">รายชื่อเจ้าหน้าที่</h2>
+          </div>
+
+          <div class="card-section">
+            <form class="filters filters--officers" id="filters" role="search" aria-label="ตัวกรองรายชื่อเจ้าหน้าที่" onsubmit="return false">
+              <label class="field-search">
+                <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+                <input id="stSearch" type="search" placeholder="ค้นหาชื่อ เบอร์โทร หรือความเชี่ยวชาญ" autocomplete="off" aria-label="ค้นหาเจ้าหน้าที่">
+              </label>
+              <select class="select" id="stCategory" aria-label="ประเภทงาน"></select>
+              <select class="select" id="stZone" aria-label="พื้นที่รับผิดชอบ"></select>
+              <select class="select" id="stStatus" aria-label="สถานะ"></select>
+            </form>
+
+            <p class="list-meta" id="staffMeta" aria-live="polite"></p>
+          </div>
+
+          <div class="table-wrap">
+            <table class="table table--list">
+              <thead>
+                <tr>
+                  <th scope="col">เจ้าหน้าที่</th>
+                  <th scope="col">ความเชี่ยวชาญ</th>
+                  <th scope="col">พื้นที่รับผิดชอบ</th>
+                  <th scope="col">การเข้าเวร</th>
+                  <th scope="col">ภาระงาน</th>
+                  <th scope="col">สถานะ</th>
+                </tr>
+              </thead>
+              <tbody id="staffBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+  <!-- หน้าต่างป๊อปอัป (shared.js เติมเนื้อหาเมื่อเปิด) -->
+  <dialog id="assignDialog" aria-labelledby="assignTitle"></dialog>
+  <dialog id="detailDialog" class="sheet" aria-labelledby="detailTitle"></dialog>
+  <dialog id="newDialog" aria-labelledby="newTitle"></dialog>
+  <dialog id="confirmDialog" class="dialog-sm" aria-labelledby="confirmTitle"></dialog>
+
+  <script src="shared.js"></script>
+  <script src="officers.js"></script>
+</body>
+</html>

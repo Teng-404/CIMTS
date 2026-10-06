@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>รายการแจ้งเหตุ | CampusCare Incident Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="app">
+    <!-- เมนูซ้ายและแถบบน: สร้างโดย mountShell() ใน shared.js -->
+    <aside class="sidebar" id="sidebar" aria-label="เมนูหลัก"></aside>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+
+      <main class="content">
+        <section class="page-head page-head--list">
+          <div>
+            <p class="eyebrow">Incident Queue</p>
+            <h1>รายการแจ้งเหตุทั้งหมด</h1>
+            <p class="muted">ค้นหา กรอง และติดตามสถานะจากจุดเดียว</p>
+          </div>
+          <div class="page-head-actions">
+            <button type="button" class="btn btn-ghost btn-lg" id="exportBtn">
+              <svg class="icon"><use href="#i-download"/></svg>ส่งออก CSV
+            </button>
+            <button type="button" class="btn btn-primary btn-lg" data-action="new">
+              <svg class="icon"><use href="#i-plus"/></svg>รับแจ้งเหตุใหม่
+            </button>
+          </div>
+        </section>
+
+        <!-- ตัวกรอง -->
+        <form class="filters" id="filters" role="search" aria-label="ตัวกรองรายการแจ้งเหตุ" onsubmit="return false">
+          <label class="field-search">
+            <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+            <input id="listSearch" type="search" placeholder="ค้นหาเลขเหตุ ชื่อรายการ สถานที่ หรือผู้รับผิดชอบ" autocomplete="off" aria-label="ค้นหาเหตุ">
+          </label>
+          <select class="select" id="fPriority" aria-label="ระดับความเร่งด่วน"></select>
+          <select class="select" id="fStatus" aria-label="สถานะ"></select>
+          <select class="select" id="fCategory" aria-label="ประเภทเหตุ"></select>
+          <select class="select" id="fOwner" aria-label="ผู้รับผิดชอบ"></select>
+          <select class="select" id="fSort" aria-label="เรียงลำดับ"></select>
+        </form>
+
+        <p class="list-meta" id="listMeta" aria-live="polite"></p>
+
+        <section class="card" aria-label="ตารางรายการแจ้งเหตุ">
+          <div class="table-wrap">
+            <table class="table table--list">
+              <thead>
+                <tr>
+                  <th scope="col">เลขที่</th>
+                  <th scope="col">รายการเหตุ</th>
+                  <th scope="col">ประเภท</th>
+                  <th scope="col">ระดับ</th>
+                  <th scope="col">สถานะ</th>
+                  <th scope="col">ผู้รับผิดชอบ</th>
+                  <th scope="col">แจ้งเมื่อ</th>
+                  <th scope="col">กำหนดเวลา</th>
+                </tr>
+              </thead>
+              <tbody id="listBody"></tbody>
+            </table>
+          </div>
+          <div class="card-foot" id="pager"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+  <!-- หน้าต่างป๊อปอัป (shared.js เติมเนื้อหาเมื่อเปิด) -->
+  <dialog id="assignDialog" aria-labelledby="assignTitle"></dialog>
+  <dialog id="detailDialog" class="sheet" aria-labelledby="detailTitle"></dialog>
+  <dialog id="newDialog" aria-labelledby="newTitle"></dialog>
+  <dialog id="confirmDialog" class="dialog-sm" aria-labelledby="confirmTitle"></dialog>
+
+  <script src="shared.js"></script>
+  <script src="incidents.js"></script>
+</body>
+</html>

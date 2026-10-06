@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>มอบหมายงาน | CampusCare Incident Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="app">
+    <!-- เมนูซ้ายและแถบบน: สร้างโดย mountShell() ใน shared.js -->
+    <aside class="sidebar" id="sidebar" aria-label="เมนูหลัก"></aside>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+
+      <main class="content">
+        <section class="page-head page-head--list">
+          <div>
+            <p class="eyebrow">Assignment Queue</p>
+            <h1>มอบหมายงาน</h1>
+            <p class="muted">คัดกรองและเลือกเจ้าหน้าที่ที่เหมาะสมให้แต่ละเหตุ</p>
+          </div>
+        </section>
+
+        <div class="assign-grid">
+          <!-- คิวรอมอบหมาย -->
+          <section class="card assign-col" aria-labelledby="queueTitle">
+            <div class="card-head">
+              <h2 class="card-title" id="queueTitle">คิวรอมอบหมาย</h2>
+              <span class="chip" id="queueCount"></span>
+            </div>
+            <div class="tabs" id="queueTabs" role="group" aria-label="กรองตามระดับความเร่งด่วน"></div>
+            <div class="queue-list" id="queueList"></div>
+          </section>
+
+          <!-- รายละเอียดเหตุที่เลือก -->
+          <section class="card assign-col" aria-labelledby="detailTitleStatic">
+            <div class="card-head">
+              <h2 class="card-title" id="detailTitleStatic">รายละเอียดเหตุ</h2>
+              <span class="muted small" id="detailMeta"></span>
+            </div>
+            <div id="detailBody"></div>
+          </section>
+
+          <!-- เจ้าหน้าที่ที่ระบบแนะนำ -->
+          <section class="card assign-col" aria-labelledby="recTitle">
+            <div class="card-head">
+              <h2 class="card-title" id="recTitle">เจ้าหน้าที่ที่ระบบแนะนำ</h2>
+              <span class="chip" id="recCount"></span>
+            </div>
+            <div id="recBody"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+  <!-- หน้าต่างป๊อปอัป (shared.js เติมเนื้อหาเมื่อเปิด) -->
+  <dialog id="assignDialog" aria-labelledby="assignTitle"></dialog>
+  <dialog id="detailDialog" class="sheet" aria-labelledby="detailTitle"></dialog>
+  <dialog id="newDialog" aria-labelledby="newTitle"></dialog>
+  <dialog id="confirmDialog" class="dialog-sm" aria-labelledby="confirmTitle"></dialog>
+
+  <script src="shared.js"></script>
+  <script src="assign.js"></script>
+</body>
+</html>

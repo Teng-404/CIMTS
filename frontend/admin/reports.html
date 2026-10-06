@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>รายงานและสถิติ | CampusCare Incident Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="app">
+    <!-- เมนูซ้ายและแถบบน: สร้างโดย mountShell() ใน shared.js -->
+    <aside class="sidebar" id="sidebar" aria-label="เมนูหลัก"></aside>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+
+      <main class="content">
+        <section class="page-head page-head--list">
+          <div>
+            <p class="eyebrow">Reports &amp; Analytics</p>
+            <h1>รายงานและสถิติ</h1>
+            <p class="muted">ภาพรวมสถิติการแจ้งเหตุและประสิทธิภาพการดำเนินงานของทีม</p>
+          </div>
+        </section>
+
+        <!-- การ์ดสรุป: กดเพื่อไปดูรายการที่ตรงกับสถานะนั้นในหน้ารายการแจ้งเหตุ -->
+        <section class="stats" id="reportStats" aria-label="สรุปภาพรวมเหตุ"></section>
+
+        <div class="grid-bottom grid-bottom--reports">
+          <section class="card" aria-labelledby="monthlyTitle">
+            <div class="card-head">
+              <h2 class="card-title" id="monthlyTitle">สถิติการแจ้งเหตุแยกตามเดือน</h2>
+              <select class="select select--sm" id="yearSelect" aria-label="เลือกปี"></select>
+            </div>
+            <div class="chart" id="monthlyBody"></div>
+          </section>
+
+          <section class="card" aria-labelledby="categoryTitle">
+            <div class="card-head">
+              <h2 class="card-title" id="categoryTitle">สถิติการแจ้งเหตุแยกตามประเภท</h2>
+              <span class="muted small">ทั้งหมดในระบบ</span>
+            </div>
+            <div class="chart" id="categoryBody"></div>
+          </section>
+
+          <section class="card" aria-labelledby="zoneTitle">
+            <div class="card-head">
+              <h2 class="card-title" id="zoneTitle">สรุปตามพื้นที่</h2>
+              <span class="muted small">เรียงตามจำนวนเหตุมากไปน้อย</span>
+            </div>
+            <div id="zoneBody"></div>
+          </section>
+
+          <section class="card" aria-labelledby="responseTitle">
+            <div class="card-head">
+              <h2 class="card-title" id="responseTitle">เวลาตอบสนองเฉลี่ยตามระดับ</h2>
+              <span class="muted small">จากเหตุที่มอบหมาย/ปิดงานแล้ว</span>
+            </div>
+            <div id="responseBody"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+  <!-- หน้าต่างป๊อปอัป (shared.js เติมเนื้อหาเมื่อเปิด แม้หน้านี้จะไม่เปิดเองก็ตาม เผื่อใช้ toast ร่วม) -->
+  <dialog id="assignDialog" aria-labelledby="assignTitle"></dialog>
+  <dialog id="detailDialog" class="sheet" aria-labelledby="detailTitle"></dialog>
+  <dialog id="newDialog" aria-labelledby="newTitle"></dialog>
+  <dialog id="confirmDialog" class="dialog-sm" aria-labelledby="confirmTitle"></dialog>
+
+  <script src="shared.js"></script>
+  <script src="reports.js"></script>
+</body>
+</html>

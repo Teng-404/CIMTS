@@ -1,0 +1,47 @@
+# ไฟล์นี้ทำให้ Render สร้างทั้งฐานข้อมูลและเว็บเซอร์วิสให้อัตโนมัติ
+# วิธีใช้: Render Dashboard -> New -> Blueprint -> เลือก repo นี้
+#
+# ถ้าไม่อยากใช้ Blueprint จะสร้างทีละอันผ่านหน้าเว็บก็ได้ ผลลัพธ์เหมือนกัน
+
+databases:
+  - name: cimts-db
+    databaseName: cimts
+    user: cimts
+    plan: free          # ⚠️ ฐานข้อมูลฟรีหมดอายุ 30 วันนับจากวันสร้าง
+
+services:
+  - type: web
+    name: cimts
+    runtime: python
+    plan: free          # ⚠️ หลับหลังไม่มีคนใช้ 15 นาที ตื่นใช้เวลา 30-60 วินาที
+    region: singapore   # ใกล้ไทยที่สุด
+    rootDir: backend
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn config.wsgi:application"
+
+    envVars:
+      # ดึงค่าเชื่อมต่อจากฐานข้อมูลด้านบนให้อัตโนมัติ ไม่ต้องคัดลอกเอง
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cimts-db
+          property: connectionString
+
+      # Render สุ่มค่าให้เอง ไม่ต้องคิดเอง และไม่หลุดอยู่ในโค้ด
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+
+      - key: DJANGO_DEBUG
+        value: "False"
+
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+
+      # ค่าเหล่านี้ต้องกรอกเองใน Dashboard (sync: false = Render จะถามตอนสร้าง)
+      # สมัครฟรีที่ cloudinary.com แล้วคัดลอกจากหน้า Dashboard
+      # จำเป็นจริงๆ เพราะดิสก์ของแพลนฟรีหายทุกครั้งที่ deploy ใหม่
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false

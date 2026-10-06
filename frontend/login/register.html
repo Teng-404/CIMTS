@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>สมัครสมาชิก | CampusCare Incident Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+  <main class="login">
+    <!-- ฝั่งซ้าย: แบรนด์ -->
+    <aside class="brand-panel">
+      <div class="brand">
+        <img class="brand-logo" src="logo.png" width="1000" height="252" alt="CampusCare Incident Center">
+      </div>
+
+      <div class="brand-body">
+        <p class="brand-headline">สร้างบัญชีเพื่อเริ่มใช้งานศูนย์รับแจ้งเหตุ</p>
+        <ul class="features">
+          <li>
+            <span class="feature-icon feature-icon--blue"><svg class="icon"><use href="#i-clipboard"/></svg></span>
+            <div>
+              <strong>รับแจ้งและมอบหมายงานได้ทันที</strong>
+              <span>ติดตามสถานะเหตุทุกรายการในที่เดียว</span>
+            </div>
+          </li>
+          <li>
+            <span class="feature-icon feature-icon--red"><svg class="icon"><use href="#i-bell"/></svg></span>
+            <div>
+              <strong>แจ้งเตือนงานเกิน SLA</strong>
+              <span>ไม่พลาดทุกเหตุเร่งด่วนและเหตุฉุกเฉิน</span>
+            </div>
+          </li>
+          <li>
+            <span class="feature-icon feature-icon--green"><svg class="icon"><use href="#i-check"/></svg></span>
+            <div>
+              <strong>สรุปรายงานและสถิติ</strong>
+              <span>ดูภาระงานเจ้าหน้าที่และผลการดำเนินการ</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ฝั่งขวา: ฟอร์มสมัครสมาชิก -->
+    <section class="form-panel">
+      <div class="form-card form-card--wide" id="formCard">
+        <h1>สมัครสมาชิก</h1>
+        <p class="subtitle">สร้างบัญชีสำหรับเจ้าหน้าที่และผู้ประสานงาน</p>
+
+        <div id="banner" class="banner" role="alert" hidden>
+          <svg class="icon" id="bannerIcon"><use href="#i-alert"/></svg>
+          <span id="bannerText"></span>
+        </div>
+
+        <form id="registerForm" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="firstName">ชื่อ</label>
+              <div class="input-wrap">
+                <input id="firstName" name="firstName" type="text" autocomplete="given-name"
+                       aria-describedby="firstNameError">
+              </div>
+              <p class="field-error" id="firstNameError" hidden></p>
+            </div>
+            <div class="field">
+              <label for="lastName">นามสกุล</label>
+              <div class="input-wrap">
+                <input id="lastName" name="lastName" type="text" autocomplete="family-name"
+                       aria-describedby="lastNameError">
+              </div>
+              <p class="field-error" id="lastNameError" hidden></p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email">อีเมล</label>
+            <div class="input-wrap input-wrap--icon">
+              <svg class="icon input-icon" aria-hidden="true"><use href="#i-mail"/></svg>
+              <input id="email" name="email" type="email" autocomplete="email"
+                     placeholder="เช่น somchai@campus.ac.th" aria-describedby="emailError">
+            </div>
+            <p class="field-error" id="emailError" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="password">รหัสผ่าน</label>
+            <div class="input-wrap input-wrap--icon input-wrap--toggle">
+              <svg class="icon input-icon" aria-hidden="true"><use href="#i-lock"/></svg>
+              <input id="password" name="password" type="password" autocomplete="new-password"
+                     placeholder="ตั้งรหัสผ่านของคุณ" aria-describedby="passwordError passwordRules">
+              <button type="button" class="toggle-password" data-toggle-password="password"
+                      aria-label="แสดงรหัสผ่าน" aria-pressed="false">
+                <svg class="icon"><use href="#i-eye"/></svg>
+              </button>
+            </div>
+            <p class="field-error" id="passwordError" hidden></p>
+            <div class="strength-row">
+              <div class="strength" id="strength" data-level="0" aria-hidden="true">
+                <span></span><span></span><span></span><span></span>
+              </div>
+              <span class="strength-label" id="strengthLabel" aria-live="polite"></span>
+            </div>
+            <ul class="rules" id="passwordRules">
+              <li data-rule="length">อย่างน้อย 8 ตัวอักษร</li>
+              <li data-rule="letter">มีตัวอักษร</li>
+              <li data-rule="number">มีตัวเลข</li>
+            </ul>
+          </div>
+
+          <div class="field">
+            <label for="confirmPassword">ยืนยันรหัสผ่าน</label>
+            <div class="input-wrap input-wrap--icon input-wrap--toggle">
+              <svg class="icon input-icon" aria-hidden="true"><use href="#i-lock"/></svg>
+              <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password"
+                     placeholder="กรอกรหัสผ่านอีกครั้ง" aria-describedby="confirmPasswordError">
+              <button type="button" class="toggle-password" data-toggle-password="confirmPassword"
+                      aria-label="แสดงรหัสผ่าน" aria-pressed="false">
+                <svg class="icon"><use href="#i-eye"/></svg>
+              </button>
+            </div>
+            <p class="field-error" id="confirmPasswordError" hidden></p>
+          </div>
+
+          <div class="field">
+            <label class="checkbox checkbox--top">
+              <input type="checkbox" id="terms" name="terms" aria-describedby="termsError">
+              <!-- ใส่ลิงก์หน้าเงื่อนไขและนโยบายจริงที่นี่ -->
+              <span>ฉันยอมรับ <a href="#" class="link">เงื่อนไขการใช้งาน</a> และ <a href="#" class="link">นโยบายความเป็นส่วนตัว</a></span>
+            </label>
+            <p class="field-error" id="termsError" hidden></p>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="submitBtn">
+            <span class="btn-label">สมัครสมาชิก</span>
+          </button>
+        </form>
+
+        <p class="help">มีบัญชีอยู่แล้ว? <a href="login.html" class="link">เข้าสู่ระบบ</a></p>
+      </div>
+
+      <p class="legal">© <span id="year"></span> CampusCare Incident Center</p>
+    </section>
+  </main>
+
+  <script src="auth-common.js"></script>
+  <script src="register.js"></script>
+</body>
+</html>

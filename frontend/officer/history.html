@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ประวัติงานที่เคยทำ | CampusCare Incident Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="officer.css">
+</head>
+<body>
+  <div class="app">
+    <!-- เมนูซ้ายและแถบบน: สร้างโดย mountShell() ใน shared.js -->
+    <aside class="sidebar" id="sidebar" aria-label="เมนูหลัก"></aside>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+
+      <main class="content">
+        <section class="page-head page-head--list">
+          <div>
+            <p class="eyebrow">Job History</p>
+            <h1>ประวัติงานที่เคยทำ</h1>
+            <p class="muted">ค้นหาและติดตามงานทั้งหมดที่เคยได้รับมอบหมาย</p>
+          </div>
+        </section>
+
+        <section class="card" aria-label="ตารางประวัติงาน">
+          <div class="card-section">
+            <form class="filters filters--officers" id="filters" role="search" aria-label="ตัวกรองประวัติงาน" onsubmit="return false">
+              <label class="field-search">
+                <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+                <input id="hSearch" type="search" placeholder="ค้นหาเลขที่งาน ชื่อรายการ หรือสถานที่" autocomplete="off" aria-label="ค้นหางาน">
+              </label>
+              <select class="select" id="hCategory" aria-label="ประเภทงาน"></select>
+              <select class="select" id="hStatus" aria-label="สถานะ"></select>
+              <select class="select" id="hSort" aria-label="เรียงลำดับ"></select>
+            </form>
+
+            <p class="list-meta" id="listMeta" aria-live="polite"></p>
+          </div>
+
+          <div class="table-wrap">
+            <table class="table table--list">
+              <thead>
+                <tr>
+                  <th scope="col">เลขที่</th>
+                  <th scope="col">รายการงาน</th>
+                  <th scope="col">ประเภท</th>
+                  <th scope="col">ระดับ</th>
+                  <th scope="col">สถานะ</th>
+                  <th scope="col">ได้รับมอบหมาย</th>
+                </tr>
+              </thead>
+              <tbody id="listBody"></tbody>
+            </table>
+          </div>
+          <div class="card-foot" id="pager"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+  <!-- หน้าต่างป๊อปอัป (shared.js เติมเนื้อหาเมื่อเปิด) -->
+  <dialog id="detailDialog" class="sheet" aria-labelledby="detailTitle"></dialog>
+  <dialog id="updateDialog" aria-labelledby="updateTitle"></dialog>
+
+  <script src="shared.js"></script>
+  <script src="history.js"></script>
+</body>
+</html>

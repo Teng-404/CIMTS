@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>จัดการผู้ใช้งาน | CampusCare Incident Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="app">
+    <!-- เมนูซ้ายและแถบบน: สร้างโดย mountShell() ใน shared.js -->
+    <aside class="sidebar" id="sidebar" aria-label="เมนูหลัก"></aside>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+
+      <main class="content">
+        <section class="page-head page-head--list">
+          <div>
+            <p class="eyebrow">User Management</p>
+            <h1>จัดการผู้ใช้งาน</h1>
+            <p class="muted">เพิ่ม แก้ไข และกำหนดสิทธิ์การเข้าถึงระบบของผู้ใช้งานทุกบทบาท</p>
+          </div>
+          <div class="page-head-actions">
+            <button type="button" class="btn btn-primary btn-lg" data-action="new-user">
+              <svg class="icon"><use href="#i-user-plus"/></svg>เพิ่มผู้ใช้งาน
+            </button>
+          </div>
+        </section>
+
+        <!-- การ์ดสรุป: กดเพื่อกรองตาราง -->
+        <section class="stats" id="userStats" aria-label="สรุปผู้ใช้งานตามบทบาท"></section>
+
+        <section class="card" aria-label="ตารางผู้ใช้งาน">
+          <div class="card-head">
+            <h2 class="card-title">รายชื่อผู้ใช้งาน</h2>
+          </div>
+
+          <div class="card-section">
+            <form class="filters filters--officers" id="filters" role="search" aria-label="ตัวกรองผู้ใช้งาน" onsubmit="return false">
+              <label class="field-search">
+                <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+                <input id="uSearch" type="search" placeholder="ค้นหาชื่อ อีเมล ชื่อผู้ใช้ หรือเบอร์โทร" autocomplete="off" aria-label="ค้นหาผู้ใช้งาน">
+              </label>
+              <select class="select" id="uRole" aria-label="บทบาท"></select>
+              <select class="select" id="uActive" aria-label="สถานะบัญชี"></select>
+            </form>
+
+            <p class="list-meta" id="userMeta" aria-live="polite"></p>
+          </div>
+
+          <div class="table-wrap">
+            <table class="table table--list">
+              <thead>
+                <tr>
+                  <th scope="col">ผู้ใช้งาน</th>
+                  <th scope="col">บทบาท</th>
+                  <th scope="col">ติดต่อ</th>
+                  <th scope="col">ข้อมูลเจ้าหน้าที่</th>
+                  <th scope="col">สถานะ</th>
+                  <th scope="col">จัดการ</th>
+                </tr>
+              </thead>
+              <tbody id="userBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+  <!-- หน้าต่างป๊อปอัป (shared.js และ users.js เติมเนื้อหาเมื่อเปิด) -->
+  <dialog id="assignDialog" aria-labelledby="assignTitle"></dialog>
+  <dialog id="detailDialog" class="sheet" aria-labelledby="detailTitle"></dialog>
+  <dialog id="newDialog" aria-labelledby="newTitle"></dialog>
+  <dialog id="confirmDialog" class="dialog-sm" aria-labelledby="confirmTitle"></dialog>
+  <dialog id="userDialog" aria-labelledby="userFormTitle"></dialog>
+  <dialog id="passwordDialog" class="dialog-sm" aria-labelledby="passwordTitle"></dialog>
+
+  <script src="shared.js"></script>
+  <script src="users.js"></script>
+</body>
+</html>

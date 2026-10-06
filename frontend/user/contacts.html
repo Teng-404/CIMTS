@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>เบอร์ติดต่อฉุกเฉิน | CampusCare Incident Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="user.css">
+</head>
+<body>
+  <div class="app">
+    <!-- เมนูซ้ายและแถบบน: สร้างโดย mountShell() ใน shared.js -->
+    <aside class="sidebar" id="sidebar" aria-label="เมนูหลัก"></aside>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+
+      <main class="content">
+        <section class="page-head page-head--list">
+          <div>
+            <p class="eyebrow">Emergency Contacts</p>
+            <h1>เบอร์ติดต่อฉุกเฉิน</h1>
+            <p class="muted">เบอร์โทรสำหรับเหตุฉุกเฉิน กดที่เบอร์เพื่อโทรออกได้ทันที</p>
+          </div>
+        </section>
+
+        <section class="emergency" id="emergencyBanner" aria-live="polite"></section>
+
+        <section aria-labelledby="internalTitle">
+          <h2 class="section-title" id="internalTitle">ภายในมหาวิทยาลัย</h2>
+          <div class="contact-grid" id="internalContacts"></div>
+        </section>
+
+        <section aria-labelledby="externalTitle">
+          <h2 class="section-title" id="externalTitle">หน่วยงานภายนอก</h2>
+          <div class="contact-grid" id="externalContacts"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+  <!-- หน้าต่างป๊อปอัป (shared.js เติมเนื้อหาเมื่อเปิด) -->
+  <dialog id="newDialog" aria-labelledby="newTitle"></dialog>
+  <dialog id="detailDialog" class="sheet" aria-labelledby="detailTitle"></dialog>
+
+  <script src="shared.js"></script>
+  <script src="contacts.js"></script>
+</body>
+</html>

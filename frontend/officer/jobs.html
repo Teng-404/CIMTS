@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>งานของฉัน | CampusCare Incident Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="officer.css">
+</head>
+<body>
+  <div class="app">
+    <!-- เมนูซ้ายและแถบบน: สร้างโดย mountShell() ใน shared.js -->
+    <aside class="sidebar" id="sidebar" aria-label="เมนูหลัก"></aside>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+
+      <main class="content">
+        <section class="page-head page-head--list">
+          <div>
+            <p class="eyebrow">สำหรับเจ้าหน้าที่</p>
+            <h1>งานที่ได้รับมอบหมาย</h1>
+            <p class="muted" id="pageSub"></p>
+          </div>
+        </section>
+
+        <!-- แบนเนอร์เหตุฉุกเฉินที่ยังไม่รับทราบ (JS เติมข้อมูล) -->
+        <section class="emergency" id="emergency" aria-live="polite" hidden></section>
+
+        <section class="stats" id="stats" aria-label="สรุปงานของฉัน"></section>
+
+        <section class="kanban" aria-label="บอร์ดงานของฉัน">
+          <div class="card">
+            <div class="kanban-col-head">
+              <h2>รอรับทราบ</h2>
+              <span class="chip" id="countPendingAck"></span>
+            </div>
+            <div class="kanban-body" id="colPendingAck"></div>
+          </div>
+          <div class="card">
+            <div class="kanban-col-head">
+              <h2>กำลังดำเนินการ</h2>
+              <span class="chip" id="countProgress"></span>
+            </div>
+            <div class="kanban-body" id="colProgress"></div>
+          </div>
+          <div class="card">
+            <div class="kanban-col-head">
+              <h2>รอตรวจสอบผล</h2>
+              <span class="chip" id="countReview"></span>
+            </div>
+            <div class="kanban-body" id="colReview"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+  <!-- หน้าต่างป๊อปอัป (shared.js เติมเนื้อหาเมื่อเปิด) -->
+  <dialog id="detailDialog" class="sheet" aria-labelledby="detailTitle"></dialog>
+  <dialog id="updateDialog" aria-labelledby="updateTitle"></dialog>
+
+  <script src="shared.js"></script>
+  <script src="jobs.js"></script>
+</body>
+</html>
