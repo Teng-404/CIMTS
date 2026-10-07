@@ -128,7 +128,8 @@ function mapIncident(raw) {
     // photos = รูปตอนแจ้งเหตุ / afterPhotos = รูปที่เจ้าหน้าที่แนบตอนบันทึกผล (คนละชุดกัน)
     photos: raw.photos?.length ?? 0,
     photoUrls: (raw.photos ?? []).map((p) => p.url),
-    afterPhotos: (raw.updates ?? []).reduce((sum, u) => sum + (u.photos ?? 0), 0),
+    afterPhotoUrls: (raw.updates ?? []).flatMap((u) => (u.photos ?? []).map((p) => p.url)),
+    afterPhotos: (raw.updates ?? []).reduce((sum, u) => sum + (u.photos?.length ?? 0), 0),
     updates: raw.updates ?? [],
     reminders: raw.reminders ?? 0,
     lastReminderAt: raw.lastReminderAt ?? null,
@@ -696,16 +697,41 @@ function alertStrip(i) {
   return strip('neutral', `กำลังดำเนินการ · กำหนดแก้ไขตาม SLA <b data-tick="remain" data-ts="${resolveDeadline(i)}"></b>`);
 }
 
-// กล่องรูปหลักฐาน — แสดงรูปจริงถ้ามี ไม่มีก็แสดงข้อความแทน
+// ตารางรูปย่อ กดแล้วเปิดรูปเต็มในแท็บใหม่
+function photoGridHtml(urls, incidentId, label) {
+  return `<div class="evidence-grid">${urls.map((url, n) => `
+    <a class="evidence-thumb" href="${esc(url)}" target="_blank" rel="noopener" title="เปิดรูปเต็ม">
+      <img src="${esc(url)}" alt="${esc(label)}ที่ ${n + 1} ของ ${esc(incidentId)}" loading="lazy">
+    </a>`).join('')}</div>`;
+}
+
+// กล่องรูปหลักฐาน — แสดงรูปจริงถ้ามี ไม่มีก็แสดงข้อความแทน (ใช้ในหน้ามอบหมายงาน)
 function evidenceHtml(incident) {
   const urls = incident.photoUrls ?? [];
   if (!urls.length) {
     return `<div class="evidence-box">${icon('image')}<span>ยังไม่มีรูปหลักฐานแนบมา</span></div>`;
   }
-  return `<div class="evidence-grid">${urls.map((url, n) => `
-    <a class="evidence-thumb" href="${esc(url)}" target="_blank" rel="noopener" title="เปิดรูปเต็ม">
-      <img src="${esc(url)}" alt="รูปหลักฐานที่ ${n + 1} ของ ${esc(incident.id)}" loading="lazy">
-    </a>`).join('')}</div>`;
+  return photoGridHtml(urls, incident.id, 'รูปหลักฐาน');
+}
+
+// รูปในหน้าต่างรายละเอียด — แยกสองชุด เพราะใช้ตรวจคนละอย่าง
+// รูปตอนแจ้งเหตุใช้ดูว่าเกิดอะไรขึ้น / รูปหลังดำเนินการใช้ตรวจก่อนปิดงานว่าแก้ไขจริง
+function detailPhotoSections(i) {
+  const before = i.photoUrls ?? [];
+  const after = i.afterPhotoUrls ?? [];
+  if (!before.length && !after.length) return '';
+
+  return `
+    ${before.length ? `
+      <section class="sheet-section">
+        <h4>รูปตอนแจ้งเหตุ (${before.length})</h4>
+        ${photoGridHtml(before, i.id, 'รูปตอนแจ้งเหตุ')}
+      </section>` : ''}
+    ${after.length ? `
+      <section class="sheet-section">
+        <h4>รูปหลังดำเนินการ (${after.length})</h4>
+        ${photoGridHtml(after, i.id, 'รูปหลังดำเนินการ')}
+      </section>` : ''}`;
 }
 
 function infoCard(label, value, cls = '') {
@@ -843,6 +869,8 @@ function openDetail(incident) {
           <h4>รายละเอียด</h4>
           <p class="detail-box${i.note ? '' : ' is-empty'}">${i.note ? esc(i.note) : 'ไม่มีรายละเอียดเพิ่มเติม'}</p>
         </section>
+
+        ${detailPhotoSections(i)}
 
         ${officerSection(i)}
 

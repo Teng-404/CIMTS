@@ -1198,3 +1198,35 @@ dialog.sheet[open] { animation: sheet-in 0.22s ease-out; }
 @media (max-width: 720px) {
   .week-grid { grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); }
 }
+
+/* รูปหลักฐานที่แนบมากับการแจ้งเหตุและรูปหลังดำเนินการ (ชุดเดียวกับฝั่งผู้ประสานงาน) */
+.evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+  gap: 8px;
+}
+
+.evidence-thumb {
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  background: var(--head-bg);
+}
+
+.evidence-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.15s;
+}
+
+.evidence-thumb:hover img { transform: scale(1.05); }
+.evidence-thumb:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .evidence-thumb img { transition: none; }
+  .evidence-thumb:hover img { transform: none; }
+}

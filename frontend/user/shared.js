@@ -140,8 +140,10 @@ function mapIncident(raw) {
     // ผู้แจ้งถือว่างาน "เริ่มลงมือ" เมื่อเจ้าหน้าที่กดรับทราบงาน
     startedAt: raw.ackAt,
     closedAt: raw.closedAt,
+    // photoUrls = รูปที่ตัวเองแนบตอนแจ้ง / afterPhotoUrls = รูปที่เจ้าหน้าที่แนบตอนซ่อมเสร็จ
     photos: raw.photos?.length ?? 0,
     photoUrls: (raw.photos ?? []).map((p) => p.url),
+    afterPhotoUrls: (raw.updates ?? []).flatMap((u) => (u.photos ?? []).map((p) => p.url)),
   };
 }
 
@@ -610,6 +612,34 @@ async function createIncident({ title, cat, pri, zone, detail, note, photos = []
 
 /* ---------- รายละเอียดเหตุ (หน้าต่างดูอย่างเดียว ไม่มีการจัดการ) ---------- */
 
+// ตารางรูปย่อ กดแล้วเปิดรูปเต็มในแท็บใหม่
+function photoGridHtml(urls, incidentId, label) {
+  return `<div class="evidence-grid">${urls.map((url, n) => `
+    <a class="evidence-thumb" href="${esc(url)}" target="_blank" rel="noopener" title="เปิดรูปเต็ม">
+      <img src="${esc(url)}" alt="${esc(label)}ที่ ${n + 1} ของ ${esc(incidentId)}" loading="lazy">
+    </a>`).join('')}</div>`;
+}
+
+// รูปสองชุด — รูปที่ตัวเองแนบตอนแจ้ง และรูปที่เจ้าหน้าที่แนบตอนซ่อมเสร็จ
+// ชุดหลังคือสิ่งที่ผู้แจ้งใช้ยืนยันว่าเรื่องได้รับการแก้ไขจริง
+function detailPhotoSections(i) {
+  const before = i.photoUrls ?? [];
+  const after = i.afterPhotoUrls ?? [];
+  if (!before.length && !after.length) return '';
+
+  return `
+    ${before.length ? `
+      <section class="sheet-section">
+        <h4>รูปที่คุณแนบไว้ (${before.length})</h4>
+        ${photoGridHtml(before, i.id, 'รูปที่แนบตอนแจ้งเหตุ')}
+      </section>` : ''}
+    ${after.length ? `
+      <section class="sheet-section">
+        <h4>รูปหลังเจ้าหน้าที่ดำเนินการ (${after.length})</h4>
+        ${photoGridHtml(after, i.id, 'รูปหลังดำเนินการ')}
+      </section>` : ''}`;
+}
+
 function openDetail(incident) {
   const i = incident;
   const events = [
@@ -647,6 +677,8 @@ function openDetail(incident) {
         </div>
 
         ${i.note ? `<section class="sheet-section"><h4>รายละเอียดที่แจ้ง</h4><p class="detail-box">${esc(i.note)}</p></section>` : ''}
+
+        ${detailPhotoSections(i)}
 
         <section class="sheet-section">
           <h4>ความคืบหน้า</h4>

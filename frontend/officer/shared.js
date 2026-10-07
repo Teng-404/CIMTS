@@ -122,7 +122,9 @@ function mapJob(raw) {
     ackAt: raw.ackAt,
     submittedAt: raw.submittedAt,
     closedAt: raw.closedAt,
+    // photoUrls = รูปตอนแจ้งเหตุ / afterPhotoUrls = รูปที่ตัวเองแนบตอนบันทึกผล (คนละชุดกัน)
     photoUrls: (raw.photos ?? []).map((p) => p.url),
+    afterPhotoUrls: (raw.updates ?? []).flatMap((u) => (u.photos ?? []).map((p) => p.url)),
     updates: raw.updates ?? [],
   };
 }
@@ -563,7 +565,7 @@ function timelineEvents(j) {
   const events = [
     { at: j.reportedAt, title: 'ได้รับมอบหมายงาน', desc: `จากผู้ประสานงาน · ${esc(CATEGORIES[j.cat].label)}` },
     j.ackAt && { at: j.ackAt, title: 'รับทราบงานแล้ว' },
-    ...j.updates.map((u) => ({ at: u.at, title: 'บันทึกความคืบหน้า', desc: u.note + (u.photos ? ` · แนบรูป ${u.photos} รูป` : '') })),
+    ...j.updates.map((u) => ({ at: u.at, title: 'บันทึกความคืบหน้า', desc: u.note + (u.photos?.length ? ` · แนบรูป ${u.photos.length} รูป` : '') })),
     j.submittedAt && { at: j.submittedAt, title: 'ส่งผลเพื่อตรวจสอบแล้ว' },
     j.closedAt && { at: j.closedAt, title: 'ผู้ประสานงานตรวจสอบและปิดงานแล้ว' },
   ].filter(Boolean).sort((a, b) => a.at - b.at);
@@ -575,6 +577,34 @@ function timelineEvents(j) {
   }[j.status];
   if (current) events.push({ ...current, now: true });
   return events;
+}
+
+// ตารางรูปย่อ กดแล้วเปิดรูปเต็มในแท็บใหม่
+function photoGridHtml(urls, jobId, label) {
+  return `<div class="evidence-grid">${urls.map((url, n) => `
+    <a class="evidence-thumb" href="${esc(url)}" target="_blank" rel="noopener" title="เปิดรูปเต็ม">
+      <img src="${esc(url)}" alt="${esc(label)}ที่ ${n + 1} ของ ${esc(jobId)}" loading="lazy">
+    </a>`).join('')}</div>`;
+}
+
+// รูปสองชุดในหน้าต่างรายละเอียด — รูปตอนแจ้งเหตุใช้ดูหน้างานก่อนออกไป
+// ส่วนรูปหลังดำเนินการคือสิ่งที่ตัวเองส่งไปแล้ว ย้อนดูได้ว่าส่งอะไรไป
+function detailPhotoSections(j) {
+  const before = j.photoUrls ?? [];
+  const after = j.afterPhotoUrls ?? [];
+  if (!before.length && !after.length) return '';
+
+  return `
+    ${before.length ? `
+      <section class="sheet-section">
+        <h4>รูปตอนแจ้งเหตุ (${before.length})</h4>
+        ${photoGridHtml(before, j.id, 'รูปตอนแจ้งเหตุ')}
+      </section>` : ''}
+    ${after.length ? `
+      <section class="sheet-section">
+        <h4>รูปที่คุณแนบไว้ (${after.length})</h4>
+        ${photoGridHtml(after, j.id, 'รูปหลังดำเนินการ')}
+      </section>` : ''}`;
 }
 
 function detailFooter(j) {
@@ -615,6 +645,8 @@ function openDetail(job) {
         </div>
 
         ${j.note ? `<section class="sheet-section"><h4>รายละเอียดที่แจ้ง</h4><p class="detail-box">${esc(j.note)}</p></section>` : ''}
+
+        ${detailPhotoSections(j)}
 
         <section class="sheet-section">
           <h4>ความคืบหน้า</h4>

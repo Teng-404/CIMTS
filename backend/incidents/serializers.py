@@ -31,7 +31,8 @@ class IncidentPhotoSerializer(serializers.ModelSerializer):
 
 
 class IncidentUpdateSerializer(serializers.ModelSerializer):
-    """ตรงกับ updates: [{ at, note, photos }] ใน shared.js"""
+    """ตรงกับ updates: [{ at, note, photos }] ใน shared.js
+    photos เป็นรายการ [{ id, url }] เหมือนรูปตอนแจ้งเหตุ (เดิมส่งมาแค่จำนวน)"""
 
     at = serializers.SerializerMethodField()
     photos = serializers.SerializerMethodField()
@@ -45,7 +46,11 @@ class IncidentUpdateSerializer(serializers.ModelSerializer):
         return ms(obj.created_at)
 
     def get_photos(self, obj):
-        return obj.photos.count()
+        # ส่ง URL มาด้วย ไม่ใช่แค่จำนวน มิฉะนั้นผู้ประสานงานจะกดดูรูปหลังดำเนินการ
+        # เพื่อตรวจก่อนปิดงานไม่ได้เลย (เห็นแค่ข้อความ "แนบรูป 2 รูป")
+        return IncidentPhotoSerializer(
+            obj.photos.all(), many=True, context=self.context
+        ).data
 
 
 class IncidentSerializer(serializers.ModelSerializer):
